@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { IMongodb } from 'src/config';
 
 @Module({
   imports: [
@@ -8,22 +9,22 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
+        const mongodb: IMongodb = configService.get('mongodb');
         const creds =
-          configService.get<string>('mongodb_username') &&
-            configService.get<string>('mongodb_password') ?
-            configService.get<string>('mongodb_username') +
+          mongodb.username && mongodb.password ?
+            mongodb.username +
             ':' +
-            configService.get<string>('mongodb_password') +
+            mongodb.password +
             '@' :
             '';
         const uri =
           'mongodb://' +
           creds +
-          configService.get<string>('mongodb_host') +
+          mongodb.host +
           ':' +
-          configService.get<string>('mongodb_port') +
+          mongodb.port +
           '/' +
-          configService.get<string>('mongodb_dbName');
+          mongodb.dbName;
         console.log('mongodbUrl', uri);
 
         return { uri };

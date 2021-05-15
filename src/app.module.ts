@@ -5,6 +5,7 @@ import { DatabaseModule } from './database/database.module';
 import { FilesModule } from './files/files.module';
 import configuration from './config';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AuthModule } from './auth/auth.module';
 import * as path from 'path';
 
 @Module({
@@ -19,6 +20,7 @@ import * as path from 'path';
     DatabaseModule,
     ProductModule,
     FilesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
