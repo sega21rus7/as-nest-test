@@ -20,7 +20,7 @@ export class AuthService {
         .send(event, dto)
         .pipe(timeout(5000))
         .toPromise();
-      return res.data;
+      return res;
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
